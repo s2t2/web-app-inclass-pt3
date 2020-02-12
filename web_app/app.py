@@ -1,4 +1,8 @@
 
-# todo: flask stuff here
+from flask import Flask
 
-print("TODO: APP")
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
