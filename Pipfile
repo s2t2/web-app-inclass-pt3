@@ -9,6 +9,9 @@ verify_ssl = true
 flask = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
+tweepy = "*"
+basilica = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

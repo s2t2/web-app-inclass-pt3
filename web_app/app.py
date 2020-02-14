@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config["CUSTOM_VAR"] = 5 # just an example of app config :-D
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_200.db"
 
 db = SQLAlchemy(app)
