@@ -27,12 +27,10 @@ def create_app():
 
     #db = SQLAlchemy(app)
     #migrate = Migrate(app, db)
-
     db.init_app(app)
-    #migrate.init_app(app, db)
-
-    with app.app_context():
-        db.create_all()
+    migrate.init_app(app, db)
+    #with app.app_context():
+    #    db.create_all()
 
     #
     # ROUTING
