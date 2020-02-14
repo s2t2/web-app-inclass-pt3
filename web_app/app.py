@@ -7,6 +7,7 @@ from flask import Flask #, jsonify, request, render_template
 
 from web_app.models import db, User, Tweet, migrate
 from web_app.routes import routes
+from web_app.twitter_service import twitter_api_client
 
 DATABASE_URL = os.getenv("DATABASE_URL", default="OOPS")
 
@@ -25,6 +26,7 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_200.db"
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+    app.config["TWITTER_API_CLIENT"] = twitter_api_client()
 
     #db = SQLAlchemy(app)
     #migrate = Migrate(app, db)

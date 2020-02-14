@@ -1,13 +1,13 @@
 
 
-from flask import Blueprint, jsonify, request, render_template, current_app
+from flask import Blueprint, jsonify, request, render_template, current_app, redirect
 
 from web_app.models import User, Tweet, db
 
 routes = Blueprint("routes", __name__)
 
 #
-# ROUTING
+# EXAMPLES
 #
 
 @routes.route("/")
@@ -18,6 +18,26 @@ def index():
 @routes.route("/about")
 def about():
     return "About Me"
+
+# GET /hello
+# GET /hello?name=Polly
+@routes.route("/hello")
+def hello(name=None):
+    print("VISITING THE HELLO PAGE")
+    print("REQUEST PARAMS:", dict(request.args))
+
+    if "name" in request.args:
+        name = request.args["name"]
+        message = f"Hello, {name}"
+    else:
+        message = "Hello World"
+
+    #return message
+    return render_template("hello.html", message=message)
+
+#
+# USERS
+#
 
 @routes.route("/users")
 @routes.route("/users.json")
@@ -57,18 +77,16 @@ def create_user():
     else:
         return jsonify({"message": "OOPS PLEASE SPECIFY A NAME!"})
 
-# GET /hello
-# GET /hello?name=Polly
-@routes.route("/hello")
-def hello(name=None):
-    print("VISITING THE HELLO PAGE")
-    print("REQUEST PARAMS:", dict(request.args))
+#
+# PREP
+#
 
-    if "name" in request.args:
-        name = request.args["name"]
-        message = f"Hello, {name}"
-    else:
-        message = "Hello World"
+@routes.route("/do_stuff")
+def do_stuff():
 
-    #return message
-    return render_template("hello.html", message=message)
+    #client = twitter_api_client()
+    client = current_app.config["TWITTER_API_CLIENT"]
+    user = client.me() # get information about the currently authenticated user
+    print(user)
+    print(type(user))
+    return jsonify({"message": "OK"})

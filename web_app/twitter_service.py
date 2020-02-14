@@ -12,29 +12,32 @@ consumer_secret = os.getenv("TWITTER_API_SECRET", default="OOPS")
 access_token = os.getenv("TWITTER_ACCESS_TOKEN", default="OOPS")
 access_token_secret = os.getenv("TWITTER_ACCESS_TOKEN_SECRET", default="OOPS")
 
-# AUTHENTICATE
+def twitter_api_client():
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    client = tweepy.API(auth)
+    return client
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+if __name__ == "__main__":
 
-# INITIALIZE API CLIENT
+    # INITIALIZE API CLIENT
 
-client = tweepy.API(auth)
-print(client)
+    client = twitter_api_client()
+    print(client)
 
-# ISSUE REQUESTS
+    # ISSUE REQUESTS
 
-user = client.me() # get information about the currently authenticated user
-print(user)
+    user = client.me() # get information about the currently authenticated user
+    print(user)
 
-tweets = client.user_timeline() # get a list of tweets posted by the currently authenticated user
+    tweets = client.user_timeline() # get a list of tweets posted by the currently authenticated user
 
-# PARSE RESPONSES
+    # PARSE RESPONSES
 
-print("---------------------------------------------------------------")
-print(f"RECENT TWEETS BY @{user.screen_name} ({user.followers_count} FOLLOWERS / {user.friends_count} FOLLOWING):")
-print("---------------------------------------------------------------")
+    print("---------------------------------------------------------------")
+    print(f"RECENT TWEETS BY @{user.screen_name} ({user.followers_count} FOLLOWERS / {user.friends_count} FOLLOWING):")
+    print("---------------------------------------------------------------")
 
-for tweet in tweets:
-    created_on = tweet.created_at.strftime("%Y-%m-%d")
-    print(" + ", tweet.id_str, created_on, tweet.text)
+    for tweet in tweets:
+        created_on = tweet.created_at.strftime("%Y-%m-%d")
+        print(" + ", tweet.id_str, created_on, tweet.text)
