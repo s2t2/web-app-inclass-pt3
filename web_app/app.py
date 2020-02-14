@@ -3,9 +3,12 @@ from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
+DATABASE_URL = os.getenv("DATABASE_URL", default="postgres://USERNAME:PASSWORD@HOST:5432/DB_NAME")
+
 app = Flask(__name__)
-app.config["CUSTOM_VAR"] = 5 # just an example of app config :-D
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_200.db"
+#app.config["CUSTOM_VAR"] = 5 # just an example of app config :-D
+#app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///web_app_200.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 db = SQLAlchemy(app)
 
