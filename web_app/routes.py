@@ -57,9 +57,6 @@ def create_user():
     else:
         return jsonify({"message": "OOPS PLEASE SPECIFY A NAME!"})
 
-
-
-
 # GET /hello
 # GET /hello?name=Polly
 @my_routes.route("/hello")
@@ -75,3 +72,17 @@ def hello(name=None):
 
     #return message
     return render_template("hello.html", message=message)
+
+
+
+
+
+
+
+
+@my_routes.route("/get_tweets")
+def get_tweets():
+    tweets = []
+    # todo: get the tweets
+    print(tweets)
+    return jsonify({"message": "OK"})
