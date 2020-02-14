@@ -15,13 +15,11 @@ pipenv shell
 Setup database:
 
 ```sh
-cd web_app
-
-FLASK_APP=app.py flask db init #> generates app/migrations dir
+FLASK_APP=web_app flask db init #> generates app/migrations dir
 
 # run both when changing the schema:
-FLASK_APP=app.py flask db migrate #> creates the db (with "alembic_version" table)
-FLASK_APP=app.py flask db upgrade #> creates the "users" table
+FLASK_APP=web_app flask db migrate #> creates the db (with "alembic_version" table)
+FLASK_APP=web_app flask db upgrade #> creates the "users" table
 ```
 
 
@@ -30,5 +28,5 @@ FLASK_APP=app.py flask db upgrade #> creates the "users" table
 Run the app:
 
 ```sh
-FLASK_APP=app.py flask run
+FLASK_APP=web_app flask run
 ```
