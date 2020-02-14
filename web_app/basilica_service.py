@@ -13,7 +13,11 @@ sentences = [
     "I don't think this sentence is very similar at all...",
 ]
 
-with basilica.Connection(BASILICA_API_KEY) as c:
-    embeddings = list(c.embed_sentences(sentences))
+connection = basilica.Connection(BASILICA_API_KEY)
 
-print(embeddings)
+embeddings = list(connection.embed_sentences(sentences))
+
+for emb in embeddings:
+    print(type(emb))
+    print(emb)
+    print("---------------")
