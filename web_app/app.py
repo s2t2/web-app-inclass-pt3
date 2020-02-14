@@ -5,7 +5,7 @@ from flask import Flask, jsonify, request, render_template
 #from flask_sqlalchemy import SQLAlchemy
 #from flask_migrate import Migrate
 
-from web_app.models import db, User, Tweet
+from web_app.models import db, User, Tweet, migrate
 
 DATABASE_URL = os.getenv("DATABASE_URL", default="OOPS")
 
@@ -31,6 +31,9 @@ def create_app():
     db.init_app(app)
     #migrate.init_app(app, db)
 
+    with app.app_context():
+        db.create_all()
+
     #
     # ROUTING
     #
@@ -46,7 +49,7 @@ def create_app():
 
     @app.route("/users")
     @app.route("/users.json")
-    def users():
+    def get_users():
         #users = [
         #    {"id":1, "name": "First User"},
         #    {"id":2, "name": "Second User"},
@@ -56,7 +59,7 @@ def create_app():
 
         users = User.query.all() # returns a list of <class 'alchemy.User'>
         print(type(users))
-        print(type(users[0]))
+        #print(type(users[0]))
         #print(len(users))
 
         users_response = []
@@ -66,8 +69,6 @@ def create_app():
             users_response.append(user_dict)
 
         return jsonify(users_response)
-
-
 
     @app.route("/users/create", methods=["POST"])
     def create_user():
