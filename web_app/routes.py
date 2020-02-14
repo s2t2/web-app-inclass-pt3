@@ -3,6 +3,7 @@
 from flask import Blueprint, jsonify, request, render_template #,current_app
 
 from web_app.models import User, Tweet, db
+from web_app.twitter_service import twitter_api_client
 
 my_routes = Blueprint("my_routes", __name__)
 
@@ -83,6 +84,9 @@ def hello(name=None):
 @my_routes.route("/get_tweets")
 def get_tweets():
     tweets = []
-    # todo: get the tweets
+    client = twitter_api_client()
+    statuses = client.user_timeline("elonmusk", tweet_mode="extended")
+    for status in statuses:
+        tweets.append({"id": status.id_str, "message": status.full_text})
     print(tweets)
-    return jsonify({"message": "OK"})
+    return jsonify(tweets)
