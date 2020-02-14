@@ -7,6 +7,8 @@ from web_app.twitter_service import twitter_api_client
 
 my_routes = Blueprint("my_routes", __name__)
 
+client = twitter_api_client()
+
 #
 # ROUTING
 #
@@ -84,7 +86,17 @@ def hello(name=None):
 @my_routes.route("/get_tweets")
 def get_tweets():
     tweets = []
-    client = twitter_api_client()
+    #client = twitter_api_client()
+    statuses = client.user_timeline("elonmusk", tweet_mode="extended")
+    for status in statuses:
+        tweets.append({"id": status.id_str, "message": status.full_text})
+    print(tweets)
+    return jsonify(tweets)
+
+@my_routes.route("/get_twitter_user")
+def get_twitter_user():
+    tweets = []
+    #client = twitter_api_client()
     statuses = client.user_timeline("elonmusk", tweet_mode="extended")
     for status in statuses:
         tweets.append({"id": status.id_str, "message": status.full_text})
