@@ -46,30 +46,21 @@ def show_user(screen_name=None):
     db.session.commit()
 
     # Get Tweets:
+    statuses = client.user_timeline(screen_name, tweet_mode="extended", count=200, exclude_replies=True, include_rts=False)
+    for status in statuses:
+        print(status.full_text)
 
+        # Find or create database tweet:
+        db_tweet = Tweet.query.get(status.id) or Tweet(id=status.id)
+        print(db_tweet)
+        # Update database tweet:
+        db_tweet.user_id = status.author.id # or db_user.id
+        db_tweet.full_text = status.full_text
+        db.session.add(db_tweet)
 
-    #if db_user:
-    #    db_user = User(id=tw_user.id, screen_name=tw_user.screen_name, followers_count=tw_user.followers_count)
-    #    db.session.add(db_user)
+    db.session.commit()
 
-
-
-    #breakpoint()
-
-    #db_user = (
-    #    User.query.get(twitter_user.id) or
-    #
-    #)
-
-
-
-    #tweet_mode="extended"
-    #count=200,
-    #exclude_replies=True,
-    #include_rts=False
-
-
-    return render_template("user_profile.html", screen_name=screen_name)
+    return render_template("user_profile.html", user=db_user, tweets=db_user.tweets)
 
 
 
