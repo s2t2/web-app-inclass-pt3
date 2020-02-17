@@ -12,6 +12,7 @@
 
     <p>Yep</p>
 
+    <!--
     <form action="/users/create" method="POST">
         <label>Name:</label>
         <input type="text" name="name" placeholder="User XYZ" value="User XYZ">
@@ -25,6 +26,22 @@
 
         <button>Submit</button>
     </form>
+    -->
 
+    <form action="/predict" method="POST">
+        <label>First Screen Name:</label>
+        <input type="text" name="first_screen_name" placeholder="elonmusk" value="elonmusk">
+        <br>
+
+        <label>Second Screen Name:</label>
+        <input type="text" name="second_screen_name" placeholder="s2t2" value="s2t2">
+        <br>
+
+        <label>Example Tweet Text:</label>
+        <input type="text" name="tweet_text" placeholder="Hello World #YOLO" value="Hello World #YOLO">
+        <br>
+
+        <button>Predict!</button>
+    </form>
 </body>
 </html>

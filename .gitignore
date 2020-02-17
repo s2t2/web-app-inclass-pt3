@@ -1,6 +1,8 @@
 
-# TODO:
 
-# web_app/web_app_200.db
 
+# ignore development database(s):
+*.db
+
+# ignore secret credentials:
 .env

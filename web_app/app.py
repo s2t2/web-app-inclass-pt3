@@ -7,8 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from web_app.models import db, User, Tweet, migrate
-from web_app.routes import my_routes
-#from web_app.more_routes import more_routes
+#from web_app.routes import my_routes
+from web_app.new_routes import new_routes
 from web_app.twitter_service import twitter_api_client
 
 load_dotenv()
@@ -26,7 +26,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    app.register_blueprint(my_routes)
-    #app.register_blueprint(more_routes)
+    #app.register_blueprint(my_routes)
+    app.register_blueprint(new_routes)
 
     return app
