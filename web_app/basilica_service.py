@@ -7,17 +7,30 @@ load_dotenv()
 
 BASILICA_API_KEY = os.getenv("BASILICA_API_KEY", default="OOPS")
 
-sentences = [
-    "This is a sentence!",
-    "This is a similar sentence!",
-    "I don't think this sentence is very similar at all...",
-]
+def basilica_connection():
+    connection = basilica.Connection(BASILICA_API_KEY)
+    print(connection)
+    return connection
 
-connection = basilica.Connection(BASILICA_API_KEY)
+if __name__ == "__main__":
 
-embeddings = list(connection.embed_sentences(sentences))
+    sentences = [
+        "This is a sentence!",
+        "This is a similar sentence!",
+        "I don't think this sentence is very similar at all...",
+    ]
 
-for emb in embeddings:
-    print(type(emb))
-    print(emb)
-    print("---------------")
+    connection = basilica_connection()
+
+    embeddings = list(connection.embed_sentences(sentences))
+
+    for emb in embeddings:
+        print(type(emb)) #> list
+        print(len(emb)) #> 768
+        print(emb)
+        print("---------------")
+
+    result = connection.embed_sentence("Hello World", model="twitter")
+    print(type(result)) #> list
+    print(len(result)) #> 768
+    print(result)

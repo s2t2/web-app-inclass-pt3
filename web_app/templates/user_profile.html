@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Profile for {{ user.screen_name }}</title>
+</head>
+<body>
+
+    <h1>Twitter User: {{ user.screen_name }}</h1>
+
+    <p>Followers Count: {{ user.followers_count }}</p>
+
+    {% if tweets %}
+        <p>Recent Tweets:</p>
+        <ul>
+            {% for tweet in tweets %}
+                <li>{{tweet.full_text}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+</body>
+</html>
