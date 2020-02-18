@@ -88,13 +88,16 @@ def reset():
 #
 
 from sklearn.datasets import load_iris
-from sklearn.linear_model import LogisticRegression
+#from sklearn.linear_model import LogisticRegression
+
+from web_app.iris_stuff import classifier_model
 
 @new_routes.route("/iris")
 def iris():
     X, y = load_iris(return_X_y=True)
-    clf = LogisticRegression(random_state=0, solver='lbfgs', multi_class='multinomial').fit(X, y)
-    print("CLASSIFIER", clf)
+    #clf = LogisticRegression(random_state=0, solver='lbfgs', multi_class='multinomial').fit(X, y)
+    #print("CLASSIFIER", clf)
+    clf = classifier_model()
 
     results = clf.predict(X[:2, :])
     print("RESULTS", results)
