@@ -30,7 +30,7 @@ if __name__ == "__main__":
         print(emb)
         print("---------------")
 
-    result = connection.embed_sentence("Hello World")
+    result = connection.embed_sentence("Hello World", model="twitter")
     print(type(result)) #> list
     print(len(result)) #> 768
     print(result)
