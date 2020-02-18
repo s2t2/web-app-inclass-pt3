@@ -17,7 +17,13 @@ basilica_client = basilica_connection()
 
 @new_routes.route("/")
 def index():
-    return render_template("homepage.html")
+    #return render_template("homepage.html")
+    return render_template("new_homepage.html")
+
+@new_routes.route("/hello")
+def hello():
+    #return render_template("homepage.html")
+    return render_template("hello.html", message="YOUR NAME HERE")
 
 #
 # DATABASE STUFF
