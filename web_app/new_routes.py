@@ -38,7 +38,8 @@ def list_users():
 
     return jsonify(users_response)
 
-@new_routes.route("/users/<string:screen_name>")
+@new_routes.route("/users/<screen_name>")
+#@new_routes.route("/users/<string:screen_name>")
 def show_user(screen_name=None):
     print("SHOWING USER:", screen_name)
     try:
@@ -55,7 +56,7 @@ def show_user(screen_name=None):
         db.session.commit()
 
         # Get Tweets:
-        statuses = client.user_timeline(screen_name, tweet_mode="extended", count=50, exclude_replies=True, include_rts=False)
+        statuses = client.user_timeline(screen_name, tweet_mode="extended", count=50, exclude_replies=True, include_rts=False) # , since_id=db_user.latest_tweet_id
         for status in statuses:
             print(status.full_text)
             # Find or create database tweet:
@@ -75,6 +76,7 @@ def show_user(screen_name=None):
         print(e)
         return jsonify({"message": "OOPS THERE WAS AN ERROR. PLEASE TRY ANOTHER USER."})
 
+
 @new_routes.route("/reset")
 def reset():
     db.drop_all()
@@ -84,6 +86,32 @@ def reset():
 #
 # MODEL STUFF
 #
+
+from sklearn.datasets import load_iris
+from sklearn.linear_model import LogisticRegression
+
+@new_routes.route("/iris")
+def iris():
+    X, y = load_iris(return_X_y=True)
+    clf = LogisticRegression(random_state=0, solver='lbfgs', multi_class='multinomial').fit(X, y)
+    print("CLASSIFIER", clf)
+
+    results = clf.predict(X[:2, :])
+    print("RESULTS", results)
+    return str(results)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @new_routes.route("/predict", methods=["POST"])
 def predict():
@@ -109,11 +137,8 @@ def predict():
     user2_embeddings = np.array([tweet.embedding for tweet in user2.tweets])
     print(type(user2_embeddings), user2_embeddings.shape) #> <class 'numpy.ndarray'> (20, 768)
     embeddings = np.vstack([user1_embeddings, user2_embeddings])
-    #> ValueError: all the input array dimensions for the concatenation axis must match exactly, but along dimension 1,
-    # the array at index 0 has size 41 and the array at index 1 has size 768
-    #print("EMBEDDINGS", type(embeddings))
+    print("EMBEDDINGS", type(embeddings))
 
-    #breakpoint()
     labels = np.concatenate([np.ones(len(user1.tweets)), np.zeros(len(user2.tweets))])
     print("LABELS", type(labels))
 

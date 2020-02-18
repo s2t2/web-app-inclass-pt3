@@ -6,7 +6,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-from web_app.models import db, User, Tweet, migrate
+from web_app.models import db, migrate # User, Tweet
 #from web_app.routes import my_routes
 from web_app.new_routes import new_routes
 #from web_app.twitter_service import twitter_api_client
