@@ -62,8 +62,26 @@ def show_user(screen_name=None):
         print(e)
         return jsonify({"message": "OOPS THERE WAS AN ERROR. PLEASE TRY ANOTHER USER."})
 
+@new_routes.route("/reset")
+def reset():
+    db.drop_all()
+    db.create_all()
+    return jsonify({"message": "Database Reset OK"})
+
+
+
+
+@new_routes.route("/train")
+def train():
+    print("TRAINING THE MODEL...")
+
+
+    return jsonify({"message": "Model trained and saved."})
+
 @new_routes.route("/predict", methods=["POST"])
 def predict():
+    print("LOADING THE MODEL...")
+
     print("PREDICTING...")
     print("FORM DATA:", dict(request.form))
     return render_template("results.html", prediction_results="TODO")
