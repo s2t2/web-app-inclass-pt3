@@ -32,3 +32,20 @@ Run the app:
 ```sh
 FLASK_APP=web_app flask run
 ```
+
+## Deploy
+
+```sh
+heroku create
+#> https://desolate-tundra-53293.herokuapp.com/ | https://git.heroku.com/desolate-tundra-53293.git
+
+heroku addons:create heroku-postgresql:hobby-dev
+#> provisions a new DATABASE_URL
+
+heroku config
+heroku config:set TWITTER_API_KEY="_____"
+heroku config:set TWITTER_API_SECRET="______"
+heroku config:set TWITTER_ACCESS_TOKEN="______"
+heroku config:set TWITTER_ACCESS_TOKEN_SECRET="_____"
+heroku config
+```
