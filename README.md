@@ -36,6 +36,11 @@ FLASK_APP=web_app flask run
 ## Deploy
 
 ```sh
+pipenv install gunicorn psycopg2-binary
+```
+
+
+```sh
 heroku create
 #> https://desolate-tundra-53293.herokuapp.com/ | https://git.heroku.com/desolate-tundra-53293.git
 
@@ -48,4 +53,18 @@ heroku config:set TWITTER_API_SECRET="______"
 heroku config:set TWITTER_ACCESS_TOKEN="______"
 heroku config:set TWITTER_ACCESS_TOKEN_SECRET="_____"
 heroku config
+
+git push heroku prep-4-deploy:master
+```
+
+```sh
+heroku run bash
+# ... python --version
+# ... python web_app/stocks_service.py
+
+heroku run "python web_app/stocks_service.py"
+
+heroku run "FLASK_APP=web_app flask db init"
+heroku run "FLASK_APP=web_app flask db migrate"
+heroku run "FLASK_APP=web_app flask db upgrade"
 ```
